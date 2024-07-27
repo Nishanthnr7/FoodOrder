@@ -4,7 +4,7 @@ import Restaurant from './Restaurant'
 
 export default function Home() {
   return (
-    <div>
+    <>
       <CountRestaurant/>
       <section>
         <div className="sort">
@@ -13,18 +13,17 @@ export default function Home() {
             <button className="sort_rate p-3">Pure by Rating</button>   
         </div>
         <div className='row mt-4'>
-            <Restaurant/>
-            <Restaurant/>
-            <Restaurant/>
-            <Restaurant/>
-            <Restaurant/>
-            <Restaurant/>
-            <Restaurant/>
-            <Restaurant/>
+            <Restaurant />
+            <Restaurant />
+            <Restaurant />
+            <Restaurant />
+            <Restaurant />
+            <Restaurant />
+            <Restaurant />
+            <Restaurant />
         </div>
       </section>
-      
-    </div>
+    </>
     
   )
 }
