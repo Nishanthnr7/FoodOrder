@@ -14,6 +14,13 @@ export default function Home() {
         </div>
         <div className='row mt-4'>
             <Restaurant/>
+            <Restaurant/>
+            <Restaurant/>
+            <Restaurant/>
+            <Restaurant/>
+            <Restaurant/>
+            <Restaurant/>
+            <Restaurant/>
         </div>
       </section>
       

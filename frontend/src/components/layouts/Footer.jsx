@@ -2,8 +2,12 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div>
-      
-    </div>
+    <>
+    <footer>
+        <p className="text-center">
+            @Food Delivery Website - 2024
+        </p>
+    </footer>
+    </>
   )
 }
