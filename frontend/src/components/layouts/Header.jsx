@@ -6,9 +6,9 @@ export default function Header() {
   return (
     <nav className="navbar row sticky-top">
      {/* logo */}
-    {/* <div className="col-12 col-md-3">
-        <image src="/images/logo.webp" alt="logo" className="logo" />
-    </div> */}
+    <div className="col-12 col-md-3">
+        <image src="D:\FoodOrder Project\frontend\public\images\logo.webp" alt="logo" className="logo" />
+    </div>
     {/* Search Bar  */}
     <div className='col-12 col-md-6 mt-2 mt-md-6'>
         <Search />
