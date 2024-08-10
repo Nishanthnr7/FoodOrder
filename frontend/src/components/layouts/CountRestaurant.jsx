@@ -4,11 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CountRestaurant() {
   const dispatch = useDispatch();
-  const { loading, error, count } = useSelector((state) => state.restaurants);
+  const { loading, error, count, showVegOnly, pureVegRestaurantCount } = useSelector((state) => state.restaurants);
 
   useEffect(() => {
     dispatch(getRestaurants());
   }, [dispatch]);
+
+  // Debugging the values before rendering
+  console.log('showVegOnly:', showVegOnly);
+  console.log('pureVegRestaurantCount:', pureVegRestaurantCount);
+  console.log('count:', count);
 
   return (
     <div>
@@ -19,7 +24,16 @@ export default function CountRestaurant() {
       ) : (
         <>
           <p className="NumOfRestro">
-            {count} <span className="Restro">Restaurants</span>
+            {showVegOnly ? pureVegRestaurantCount : count}{" "}
+            <span className="Restro">
+              {showVegOnly
+                ? pureVegRestaurantCount === 1
+                  ? "Restaurant"
+                  : "Restaurants"
+                : count === 1
+                ? "Restaurant"
+                : "Restaurants"}
+            </span>
           </p>
           <hr />
         </>
