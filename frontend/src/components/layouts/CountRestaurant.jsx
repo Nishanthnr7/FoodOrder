@@ -11,9 +11,9 @@ export default function CountRestaurant() {
   }, [dispatch]);
 
   // Debugging the values before rendering
-  console.log('showVegOnly:', showVegOnly);
-  console.log('pureVegRestaurantCount:', pureVegRestaurantCount);
-  console.log('count:', count);
+  // console.log('showVegOnly:', showVegOnly);
+  // console.log('pureVegRestaurantCount:', pureVegRestaurantCount);
+  // console.log('count:', count);
 
   return (
     <div>

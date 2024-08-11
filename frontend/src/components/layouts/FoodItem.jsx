@@ -2,11 +2,11 @@ import React from 'react';
 import { FaIndianRupeeSign } from "react-icons/fa6";
 
 
-export default function FoodItem() {
+export default function FoodItem({Fooditem}) {
   return (
     <div className="col-sm-12 col-md-6 col-lg-3 my-3">
         <div className="card p-3 rounded">
-            <img src="https://b.zmtcdn.com/data/pictures/chains/3/48673/2f675184dba097aa7656596a4efe1ef3_featured_v2.jpg" 
+            <img src={Fooditem.images[0].url} 
             alt="Pizza" className="card-img-top mx-auto" 
             />
             {/*Heading and discripton*/}
