@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
+import { useNavigate } from "react-router-dom";
 import { clearErrors, register } from "../../actions/userAction";
-
 
 const Register = () => {
   const alert = useAlert();
@@ -23,56 +22,59 @@ const Register = () => {
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("/images/images.png");
 
-  const { isAuthenticated, error, loading } = useSelector((state) => state.auth);
+  const { isAuthenticated, error, loading } = useSelector(
+    (state) => state.auth
+  );
 
   //handle redirection with useEffect
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, alert, isAuthenticated, error, navigate]);
 
-  useEffect(()=> {
-    if(isAuthenticated){
-      navigate("/")
-    }
-    if(error){
-      alert.error(error)
-      dispatch(clearErrors())
-    }
-  }, [dispatch, alert, isAuthenticated, error, navigate])
- 
   const submitHandler = (e) => {
-    e.preventDefault()
-    if(password!= passwordConfirm){
-      alert.error("Password do not match")
-      return
+    e.preventDefault();
+
+    if (password !== passwordConfirm) {
+      alert.error("Password dont matched");
+      return;
     }
 
-    const formData = new FormData();
-    formData.set("name", name) //name: rahul
-    formData.set("email", email)
-    formData.set("password", password)
-    formData.set("passwordConfirm", passwordConfirm)
-    formData.set("phoneNumber", phoneNumber)
-    if(avatar === ""){
-      formData.set("avatar", "images/images.png")
-    }else{
-      formData.set("avatar", avatar )
+    const formData = new FormData(); // {name: Rohit, email: rk@yahoo.com...}
+    formData.set("name", name);
+    formData.set("email", email);
+    formData.set("password", password);
+    formData.set("passwordConfirm", passwordConfirm);
+    formData.set("phoneNumber", phoneNumber);
+    if (avatar === "") {
+      formData.set("avatar", "/images/images.png");
+    } else {
+      formData.set("avatar", avatar);
     }
 
-    dispatch(register(formData))
-  }
+    dispatch(register(formData));
+  };
 
   const onChange = (e) => {
-    if(e.target.name === "avatar"){
-      const reader = new FileReader()
-      reader.onLoad = () =>{
-        if(reader.readyState === 2){    // indicates reading is done
-          setAvatarPreview(reader.result)
-          setAvatar(reader.result)
+    if (e.target.name === "avatar") {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          // indicated the reading is done
+          setAvatarPreview(reader.result);
+          setAvatar(reader.result);
         }
-      }
-      reader.readAsDataURL(e.target.files[0])
-    }else{
-      setUser({...user, [e.target.name]:e.target.value})
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
     }
-  }
+  };
 
   return (
     <>
