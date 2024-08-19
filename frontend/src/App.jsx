@@ -7,18 +7,20 @@ import Footer from "./components/layouts/Footer";
 import Menu from "./components/layouts/Menu";
 import Register from "./components/users/Register";
 import Login from "./components/users/Login";
-import store from "./store"
-import Profile from "./components/users/Profile"
-import UpdateProfile from "./components/users/UpdateProfile"
+import store from "./store";
+import Profile from "./components/users/Profile";
+import UpdateProfile from "./components/users/UpdateProfile";
+import ForgotPassword from "./components/users/ForgotPassword";
+import NewPassword from "./components/users/NewPassword"
 import { loadUser } from "./actions/userAction";
 
 export default function App() {
   //this 3 lines are for not logging out whwn reloaded
   //dispatched exactly once when the component is rendered and check if the user is authenticated or not
-  console.log(store );
+  console.log(store);
   useEffect(() => {
-    store.dispatch(loadUser())
-  }, [])
+    store.dispatch(loadUser());
+  }, []);
 
   return (
     <BrowserRouter>
@@ -30,8 +32,13 @@ export default function App() {
             <Route path="/eats/stores/:id/menus" element={<Menu />} />
             <Route path="/users/signup" element={<Register />} />
             <Route path="/users/login" element={<Login />} />
-            <Route path="/users/me" element={<Profile/>} />
+            <Route path="/users/me" element={<Profile />} />
             <Route path="/users/me/update" element={<UpdateProfile />} />
+            <Route path="/users/forgotPassword" element={<ForgotPassword />} />
+            <Route
+              path="/users/resetPassword/:token"
+              element={<NewPassword />}
+            />
           </Routes>
         </div>
         <Footer />
