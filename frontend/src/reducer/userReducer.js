@@ -1,4 +1,4 @@
-// Reducer for managing authentication related state
+//Reducer for managing authentication related state
 
 import {
   CLEAR_ERRORS,
@@ -43,10 +43,10 @@ export const authReducer = (
     case REGISTER_USER_REQUEST:
     case LOAD_USER_REQUEST:
       return {
-        ...state,
         loading: true,
         isAuthenticated: false,
       };
+
     case LOGIN_SUCCESS:
     case REGISTER_USER_SUCCESS:
     case LOAD_USER_SUCCESS:
@@ -64,6 +64,7 @@ export const authReducer = (
         isAuthenticated: false,
         user: null,
       };
+
     case LOGIN_FAIL:
     case REGISTER_USER_FAIL:
     case LOAD_USER_FAIL:
@@ -86,7 +87,6 @@ export const authReducer = (
         ...state,
         error: null,
       };
-
     default:
       return state;
   }
@@ -107,24 +107,26 @@ export const userReducer = (state = {}, action) => {
         loading: false,
         isUpdated: action.payload,
       };
+
     case UPDATE_PROFILE_RESET:
     case UPDATE_PASSWORD_RESET:
       return {
         ...state,
         isUpdated: false,
       };
+
     case UPDATE_PROFILE_FAIL:
     case UPDATE_PASSWORD_FAIL:
       return {
         ...state,
-        error: null,
+        error: action.payload,
       };
+
     case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
       };
-
     default:
       return state;
   }
@@ -139,10 +141,11 @@ export const forgotPasswordReducer = (state = {}, action) => {
         loading: true,
         error: null,
       };
+
     case NEW_PASSWORD_SUCCESS:
       return {
         ...state,
-        message: action.payload,
+        success: action.payload,
       };
     case FORGOT_PASSWORD_SUCCESS:
       return {
@@ -150,6 +153,7 @@ export const forgotPasswordReducer = (state = {}, action) => {
         loading: false,
         message: action.payload,
       };
+
     case FORGOT_PASSWORD_FAIL:
     case NEW_PASSWORD_FAIL:
       return {
@@ -157,11 +161,13 @@ export const forgotPasswordReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+
     case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
       };
+
     default:
       return state;
   }

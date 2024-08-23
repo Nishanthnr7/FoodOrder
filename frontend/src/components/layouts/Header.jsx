@@ -4,17 +4,18 @@ import Search from "./Search";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import {logout } from "../../actions/userAction"
+import { logout } from "../../actions/userAction";
 
 export default function Header() {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
 
-  const logoutHandler = ()=>{
+  const logoutHandler = () => {
     dispatch(logout());
-    alert.success("Logged out Successfully")
-  }
+    alert.success("Logged out Successfully");
+  };
 
   return (
     <nav className="navbar row sticky-top">
@@ -29,12 +30,15 @@ export default function Header() {
         <Search />
       </div>
       <div className="col-12 col-md-3 mt-4 mt-md-0">
+        <Link to="/cart/" style={{ textDecoration: "none" }}>
         <span className="ml-3" id="cart">
           Cart
         </span>
         <span className="ml-1" id="cart_count">
-          0
+          {cartItems.length}
         </span>
+        </Link>
+        
         {user ? (
           <>
             <div className="ml-4 dropdown d-inline">

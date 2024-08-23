@@ -7,10 +7,11 @@ import { clearErrors, resetPassword } from "../../actions/userAction";
 const NewPassword = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { error, success } = useSelector((state) =>
-    state.forgotPassword);
+
+  const { error, success } = useSelector((state) => state.forgotPassword);
   const { token } = useParams();
   const navigate = useNavigate();
 
@@ -20,18 +21,21 @@ const NewPassword = () => {
       dispatch(clearErrors());
     }
     if (success) {
-      alert.success("Password Update Successfully");
+      alert.success("Password updated succesfully");
       navigate("/users/login");
     }
   }, [dispatch, alert, error, success, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.set("password", password);
     formData.set("passwordConfirm", passwordConfirm);
+
     dispatch(resetPassword(token, formData));
   };
+
   return (
     <>
       <div className="row wrapper">
@@ -45,7 +49,7 @@ const NewPassword = () => {
                 id="password_field"
                 className="form-control"
                 value={password}
-                onChange={(e)=> setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
@@ -56,7 +60,7 @@ const NewPassword = () => {
                 id="confirm_password_field"
                 className="form-control"
                 value={passwordConfirm}
-                onChange={(e)=> setPasswordConfirm(e.target.value)}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
               />
             </div>
 

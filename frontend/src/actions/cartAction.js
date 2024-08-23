@@ -3,6 +3,7 @@ import {
   ADD_TO_CART,
   FETCH_CART,
   UPDATE_CART_ITEM,
+  REMOVE_ITEM_CART
 } from "../constants/cartConstant";
 
 export const fetchCartItems = (alert) => async (dispatch) => {
@@ -23,7 +24,7 @@ export const fetchCartItems = (alert) => async (dispatch) => {
 //Add to Cart
 
 export const addItemToCart =
-  (foodItemId, restaurant, quantity, alert) => async (dispatch, get) => {
+  (foodItemId, restaurant, quantity, alert) => async (dispatch, getState) => {
     try {
       const { user } = getState().auth; //return current store tree
       const response = await axios.post("/api/v1/eats/cart/add-to-cart", {
@@ -76,8 +77,8 @@ export const removeItemFromCart =
         foodItemId = foodItemId._id;
 
         const response = await axios.delete(
-          "/api/v1/eats/cart/delete-cart-item",
-          { data: { userId: user_id, foodItemId } }
+          "/api/v1/eats/cart/delete-cart-item",    //delete-cart-item
+          { data: { userId: user._id, foodItemId } }
         );
 
         dispatch({
