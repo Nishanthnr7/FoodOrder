@@ -25,7 +25,7 @@ export const cartReducer = (
     case FETCH_CART:
       return {
         ...state,
-        resaturant: action.payload.resturant,
+        restaurant: action.payload.resturant,
         cartItems: action.payload.items,
       };
     case REMOVE_ITEM_CART:
@@ -41,11 +41,11 @@ export const cartReducer = (
         };
       }
     case CLEAR_CART:
-        return{
-            ...state,
-            cartItems: []
-        }
+      return {
+        ...state,
+        cartItems: [],
+      };
     default:
-        return state
+      return state;
   }
 };

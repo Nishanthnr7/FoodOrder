@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAlert } from "react-alert";
-import { FaIndianRupeeSign } from "react-icons/fa6";
+import { LiaRupeeSignSolid } from "react-icons/lia";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  UpdateCartQuantity,
   addItemToCart,
   removeItemFromCart,
+  UpdateCartQuantity,
 } from "../../actions/cartAction";
 
 export default function FoodItem({ fooditem, restaurant }) {
@@ -23,7 +23,7 @@ export default function FoodItem({ fooditem, restaurant }) {
 
   useEffect(() => {
     const cartItem = cartItems.find(
-      (item) => item.FoodItem._id === fooditem._id
+      (item) => item.foodItem._id === fooditem._id
     );
     if (cartItem) {
       setQuantity(cartItem.quantity);
@@ -36,19 +36,19 @@ export default function FoodItem({ fooditem, restaurant }) {
 
   const increaseQty = () => {
     if (quantity < fooditem.stock) {
-      const newQunatity = quantity + 1;
-      setQuantity(newQunatity);
-      dispatch(UpdateCartQuantity(fooditem._id, newQunatity, alert));
+      const newQuantity = quantity + 1;
+      setQuantity(newQuantity);
+      dispatch(UpdateCartQuantity(fooditem._id, newQuantity, alert));
     } else {
-      alert.error("Exceed stock limit");
+      alert.error("Exceed stock Limit");
     }
   };
 
   const decreaseQty = () => {
     if (quantity > 1) {
-      const newQunatity = quantity - 1;
-      setQuantity(newQunatity);
-      dispatch(UpdateCartQuantity(fooditem._id, newQunatity, alert));
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      dispatch(UpdateCartQuantity(fooditem._id, newQuantity, alert));
     } else {
       setQuantity(0);
       setShowButtons(false);
@@ -76,16 +76,15 @@ export default function FoodItem({ fooditem, restaurant }) {
           alt={fooditem.name}
           className="card-img-top mx-auto"
         />
-        {/*Heading and discripton*/}
+        {/* Heading and Description */}
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">{fooditem.name}</h5>
           <p className="fooditem_des">{fooditem.description}</p>
           <p className="card-text">
-            <FaIndianRupeeSign />
+            <LiaRupeeSignSolid />
             {fooditem.price}
             <br />
           </p>
-         
 
           {!showButtons ? (
             <button
@@ -102,20 +101,23 @@ export default function FoodItem({ fooditem, restaurant }) {
               <span className="btn btn-danger minus" onClick={decreaseQty}>
                 -
               </span>
+
               <input
                 type="number"
                 className="form-control count d-inline"
                 value={quantity}
                 readOnly
               />
+
               <span className="btn btn-primary plus" onClick={increaseQty}>
                 +
               </span>
             </div>
           )}
+
           <br />
           <p>
-            Status:{"  "}
+            Status:{" "}
             <span
               id="stock_status"
               className={fooditem.stock ? "greenColor" : "redColor"}

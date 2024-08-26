@@ -34,7 +34,7 @@ export default function Menu() {
                   <FoodItem
                     key={fooditem._id}
                     fooditem={fooditem}
-                    retaurant={id}
+                    restaurant={id}
                   />
                 ))}
               </div>

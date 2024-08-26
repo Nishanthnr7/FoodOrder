@@ -2,38 +2,37 @@ import axios from "axios";
 import {
   ADD_TO_CART,
   FETCH_CART,
+  REMOVE_ITEM_CART,
   UPDATE_CART_ITEM,
-  REMOVE_ITEM_CART
 } from "../constants/cartConstant";
 
 export const fetchCartItems = (alert) => async (dispatch) => {
   try {
     const response = await axios.get("/api/v1/eats/cart/get-cart");
     dispatch({
-      try: FETCH_CART,
+      type: FETCH_CART,
       payload: response.data.data,
     });
   } catch (error) {
     console.error("Fetch cart error: ", error);
-    if (error) {
+    if (alert) {
       alert.info("Cart is hungry");
     }
   }
 };
 
-//Add to Cart
-
+//ADD to Cart
 export const addItemToCart =
   (foodItemId, restaurant, quantity, alert) => async (dispatch, getState) => {
     try {
-      const { user } = getState().auth; //return current store tree
+      const { user } = getState().auth; // return the currnt store tree
       const response = await axios.post("/api/v1/eats/cart/add-to-cart", {
         userId: user._id,
         foodItemId,
         restaurantId: restaurant,
         quantity,
       });
-      alert.success("Items added to cart", response.data.cart);
+      alert.success("Item added to cart", response.data.cart);
       dispatch({
         type: ADD_TO_CART,
         payload: response.data.cart,
@@ -43,15 +42,17 @@ export const addItemToCart =
     }
   };
 
-//Update cart item quantity
+//Update cart Item quantity
 
 export const UpdateCartQuantity =
   (foodItemId, quantity, alert) => async (dispatch, getState) => {
     try {
       const { user } = getState().auth;
+
       if (typeof foodItemId === "object") {
         foodItemId = foodItemId._id;
       }
+
       const response = await axios.post("/api/v1/eats/cart/update-cart-item", {
         userId: user._id,
         foodItemId: foodItemId,
@@ -67,7 +68,8 @@ export const UpdateCartQuantity =
     }
   };
 
-//Remove items from cart
+// Remove items from cart
+
 export const removeItemFromCart =
   (foodItemId) => async (dispatch, getState) => {
     try {
@@ -75,17 +77,18 @@ export const removeItemFromCart =
 
       if (typeof foodItemId === "object") {
         foodItemId = foodItemId._id;
-
-        const response = await axios.delete(
-          "/api/v1/eats/cart/delete-cart-item",    //delete-cart-item
-          { data: { userId: user._id, foodItemId } }
-        );
-
-        dispatch({
-          type: REMOVE_ITEM_CART,
-          payload: response.data,
-        });
       }
+
+      const response = await axios.delete(
+        "/api/v1/eats/cart/delete-cart-item",
+        {
+          data: { userId: user._id, foodItemId },
+        }
+      );
+      dispatch({
+        type: REMOVE_ITEM_CART,
+        payload: response.data,
+      });
     } catch (error) {
       alert.error(error.response ? error.response.data.message : error.message);
     }
