@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "../layouts/Loader";
 import { useAlert } from "react-alert";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Link,
-  useNavigate,
-} from "react-router-dom/dist/umd/react-router-dom.development";
+import { Link, useNavigate } from "react-router-dom";
 import { clearErrors, login } from "../../actions/userAction";
 
 const Login = () => {
@@ -20,7 +17,6 @@ const Login = () => {
     (state) => state.auth
   );
 
-  //Handle form submission
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
@@ -38,7 +34,7 @@ const Login = () => {
 
   return (
     <>
-      {5 > 10 ? (
+      {loading ? (
         <Loader />
       ) : (
         <>
@@ -54,11 +50,11 @@ const Login = () => {
                     className="form-control"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                  ></input>
+                  />
                 </div>
-                <div className="form-group ">
+                <div className="form-group">
                   <label htmlFor="password_field">
-                    Password <span>( not less than 8 character)</span>
+                    Password <span>(not less than 8 characters)</span>
                   </label>
                   <input
                     type="password"
@@ -66,7 +62,7 @@ const Login = () => {
                     className="form-control"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                  ></input>
+                  />
                 </div>
                 <Link to="/users/forgotPassword" className="float-right mb-4">
                   Forgot Password
@@ -74,7 +70,7 @@ const Login = () => {
                 <button
                   id="login_button"
                   type="submit"
-                  className="btn btn-block py3"
+                  className="btn btn-block py-3"
                 >
                   LOGIN
                 </button>

@@ -44,7 +44,7 @@ export const addItemToCart =
 
 //Update cart Item quantity
 
-export const UpdateCartQuantity =
+export const updateCartQuantity =
   (foodItemId, quantity, alert) => async (dispatch, getState) => {
     try {
       const { user } = getState().auth;

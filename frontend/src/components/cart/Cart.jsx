@@ -9,41 +9,6 @@ import {
 } from "../../actions/cartAction";
 import { payment } from "../../actions/orderAction";
 
-// let fakeCartItems = [
-//   {
-//     foodItem: {
-//       images: [
-//         {
-//           public_id: "kaala_channa_chat image",
-//           url: "https://b.zmtcdn.com/data/dish_photos/94a/c01f4e8fcce05666b8a28eadd627394a.jpg?fit=around|130:130&crop=130:130;*,*",
-//           _id: "1",
-//         },
-//       ],
-//       name: "Kaala Channa Chat",
-//       price: 120,
-//       _id: "123",
-//     },
-//     quantity: 1,
-//     _id: "cart123",
-//   },
-//   {
-//     foodItem: {
-//       images: [
-//         {
-//           public_id: "Pani puri image",
-//           url: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_600/FOOD_CATALOG/IMAGES/CMS/2024/3/11/b3734c76-eba3-4509-86ed-aa774e6336e4_e7abf189-300f-4cc7-bc9b-fc42a24c8178.png_compressed",
-//           _id: "2",
-//         },
-//       ],
-//       name: "Pani puri",
-//       price: 50,
-//       _id: "456",
-//     },
-//     quantity: 1,
-//     _id: "cart456",
-//   },
-// ];
-
 const Cart = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -87,9 +52,13 @@ const Cart = () => {
           <h2 className="mt-5">
             Your Cart: <b>{cartItems.length} items</b>
           </h2>
-          <h3 className="mt-5">
-            Restaurant: <b>{restaurant.name}</b>
-          </h3>
+          {restaurant ? ( // Check if restaurant is defined
+            <h3 className="mt-5">
+              Restaurant: <b>{restaurant.name}</b>
+            </h3>
+          ) : (
+            <h3 className="mt-5">Restaurant information is unavailable</h3>
+          )}
 
           <div className="row d-flex justify-content-between cartt">
             <div className="col-12 col-lg-8">
@@ -97,14 +66,12 @@ const Cart = () => {
                 <div className="cart-item" key={item._id}>
                   <div className="row">
                     <div className="col-4 col-lg-3">
-                      {
-                        <img
-                          src={item.foodItem.images[0].url}
-                          alt="items"
-                          height="90"
-                          width="115"
-                        />
-                      }
+                      <img
+                        src={item.foodItem.images[0].url}
+                        alt="items"
+                        height="90"
+                        width="115"
+                      />
                     </div>
                     <div className="col-5 col-lg-3">{item.foodItem.name}</div>
                     <div className="col-4 col-lg-2 mt-4 mt-lg-0">
@@ -147,7 +114,7 @@ const Cart = () => {
                       <i
                         id="delete_cart_item"
                         className="fa fa-trash btn btn-danger"
-                        onClick={() => removeCartItemHandler(item.foodItem)}
+                        onClick={() => removeCartItemHandler(item.foodItem._id)}
                       ></i>
                     </div>
                   </div>
@@ -200,4 +167,3 @@ const Cart = () => {
 };
 
 export default Cart;
-  

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {
   addItemToCart,
   removeItemFromCart,
-  UpdateCartQuantity,
+  updateCartQuantity,
 } from "../../actions/cartAction";
 
 export default function FoodItem({ fooditem, restaurant }) {
@@ -38,7 +38,7 @@ export default function FoodItem({ fooditem, restaurant }) {
     if (quantity < fooditem.stock) {
       const newQuantity = quantity + 1;
       setQuantity(newQuantity);
-      dispatch(UpdateCartQuantity(fooditem._id, newQuantity, alert));
+      dispatch(updateCartQuantity(fooditem._id, newQuantity, alert));
     } else {
       alert.error("Exceed stock Limit");
     }
@@ -48,7 +48,7 @@ export default function FoodItem({ fooditem, restaurant }) {
     if (quantity > 1) {
       const newQuantity = quantity - 1;
       setQuantity(newQuantity);
-      dispatch(UpdateCartQuantity(fooditem._id, newQuantity, alert));
+      dispatch(updateCartQuantity(fooditem._id, newQuantity, alert));
     } else {
       setQuantity(0);
       setShowButtons(false);
