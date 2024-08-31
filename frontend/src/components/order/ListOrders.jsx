@@ -53,6 +53,11 @@ const ListOrders = () => {
           sort: "asc",
         },
         {
+          label: "Status",
+          field: "status",
+          sort: "asc",
+        },
+        {
           label: "Order Date",
           field: "orderDate",
           sort: "asc",
