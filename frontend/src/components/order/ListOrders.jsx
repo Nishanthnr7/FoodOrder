@@ -1,34 +1,28 @@
 import React, { useEffect } from "react";
 import { MDBDataTable } from "mdbreact";
-import { FaRegEye } from "react-icons/fa6";
-import { FaRupeeSign } from "react-icons/fa";
+import { FaRegEye, FaRupeeSign } from "react-icons/fa6";
 import Loader from "../layouts/Loader";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, myOrders } from "../../actions/orderAction";
 import { getRestaurants } from "../../actions/restaurantAction";
-import { myOrders, clearErrors } from "../../actions/orderAction";
 import { Link } from "react-router-dom";
-
 const ListOrders = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-
   const { loading, error, orders } = useSelector((state) => state.myOrders);
   const restaurants = useSelector((state) => state.restaurants);
-
   const restaurantList = Array.isArray(restaurants.restaurants)
     ? restaurants.restaurants
     : [];
-
   useEffect(() => {
-    dispatch(myOrders);
+    dispatch(myOrders());
     dispatch(getRestaurants());
     if (error) {
       alert.error(error);
-      dispatch(clearErrors);
+      dispatch(clearErrors());
     }
   }, [dispatch, alert, error]);
-
   const setOrders = () => {
     const data = {
       columns: [
@@ -38,15 +32,16 @@ const ListOrders = () => {
           sort: "asc",
         },
         {
-          label: "Order Items",
+          label: "Order items",
           field: "orderItems",
           sort: "asc",
         },
         {
-          label: "Num of Items",
+          label: "Num of items",
           field: "numOfItems",
           sort: "asc",
         },
+
         {
           label: "Amount",
           field: "amount",
@@ -74,16 +69,13 @@ const ListOrders = () => {
       const sortedOrders = orders.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
-
       sortedOrders.forEach((order) => {
         const orderItemNames = order.orderItems
           .map((item) => item.name)
           .join(",");
-
         const restaurant = restaurantList.find(
           (restaurant) => restaurant._id.toString() === order.restaurant._id
         );
-
         data.rows.push({
           restaurant: restaurant?.name || "unknown Restaurant",
           numOfItems: order.orderItems.length,
@@ -100,17 +92,18 @@ const ListOrders = () => {
             ) : (
               <p style={{ color: "red" }}>{order.orderStatus}</p>
             ),
-            orderItems: orderItemNames,
-            orderDate: new Date(order.createdAt).toLocaleDateString(),
-            actions: (
-              <Link to={`/eats/orders/${order._id}`} > <FaRegEye/></Link>
-             )
+          orderItems: orderItemNames,
+          orderDate: new Date(order.createdAt).toLocaleDateString(),
+          actions: (
+            <Link to={`/eats/orders/${order._id}`}>
+              <FaRegEye />
+            </Link>
+          ),
         });
       });
     }
-    return data
+    return data;
   };
-
   return (
     <>
       <div className="cartt">
@@ -119,8 +112,13 @@ const ListOrders = () => {
         {loading ? (
           <Loader />
         ) : (
-          <MDBDataTable data={setOrders()} className="px-3" bordered striped hover />
-          //<p>Your Order Details</p>
+          <MDBDataTable
+            data={setOrders()}
+            className="px-3"
+            bordered
+            striped
+            hover
+          />
         )}
       </div>
     </>

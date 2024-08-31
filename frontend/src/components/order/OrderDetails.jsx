@@ -6,39 +6,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { clearErrors, getOrderDetails } from "../../actions/orderAction";
 import { Link } from "react-router-dom";
-
 const OrderDetails = () => {
-  const alert = useAlert();
-  const dispatch = useDispatch();
-  const { id } = useParams();
-  const {
-    loading,
-    error,
-    order = {},
-  } = useSelector((state) => state.orderDetails);
+const alert=useAlert();
+const dispatch=useDispatch();
+const {id}=useParams();
 
-  const {
-    deliveryInfo,
-    orderItems,
-    paymentInfo,
-    user,
-    finalTotal,
-    orderStatus,
-  } = order;
+const {loading,error,order={},}=useSelector((state)=>state.orderDetails);
+const {deliveryInfo,
+orderItems,
+paymentInfo,
+user,
+finalTotal,
+orderStatus}=order;
 
-  useEffect(() => {
-    dispatch(getOrderDetails(id));
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-  }, [dispatch, alert, error, id]);
+useEffect(()=>{
+  dispatch(getOrderDetails(id));
+  if(error){
+    alert.error(error);
+    dispatch(clearErrors());
+  }
+},[dispatch,alert,error,id]);
 
-  const deliveryDetails =
-    deliveryInfo &&
-    `${deliveryInfo.address}, ${deliveryInfo.city}, ${deliveryInfo.posalCode},${deliveryInfo.country}`;
+const deliveryDetails=deliveryInfo && `${deliveryInfo.city}, ${deliveryInfo.postalCode}
+${deliveryInfo.country}`;
 
-  const isPaid = paymentInfo.status === "paid" ? true : false;
+const isPaid= paymentInfo && paymentInfo.status==="paid" ? true:false;
   return (
     <>
       {loading ? (
@@ -58,11 +50,10 @@ const OrderDetails = () => {
               </p>
               <p className="mb-4">
                 <b>Address:</b>
-                {deliveryDetails}
+               {deliveryDetails}
               </p>
               <p>
-                <b>Amount:</b> <LiaRupeeSignSolid /> 
-                {finalTotal}
+                <b>Amount:</b> <LiaRupeeSignSolid /> {finalTotal}
               </p>
 
               <hr />
@@ -75,14 +66,18 @@ const OrderDetails = () => {
               </h4>
               <h4 className="my-4">
                 Order Status :
-                <span className={order.orderStatus && String(order.orderStatus).includes("Delivered") ? "greenColor" : "redColor"}>
+                <span
+                 className={
+                  order.orderStatus &&
+                  String(order.orderStatus).includes("delivered")
+                  ? "greenColor" : "redColor"}>
                   <b>{orderStatus}</b>
                 </span>
               </h4>
               <h4 className="my-4">Order Items:</h4>
 
               <hr />
-               <div className="cart-item my-1">
+              {<div className="cart-item my-1">
                 {orderItems &&
                   orderItems.map((item) => (
                     <div key={item.fooditem} className="row my-5">
@@ -103,8 +98,7 @@ const OrderDetails = () => {
 
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
                         <p>
-                          {/* <FontAwesomeIcon icon={faIndianRupeeSign} size="xs" /> */}
-                          <LiaRupeeSignSolid/>
+                         <LiaRupeeSignSolid/>
                           {item.price}
                         </p>
                       </div>
@@ -114,7 +108,7 @@ const OrderDetails = () => {
                       </div>
                     </div>
                   ))}
-              </div> 
+              </div> }
               <hr />
             </div>
           </div>
