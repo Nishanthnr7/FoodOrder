@@ -7,6 +7,7 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { getRestaurants } from "../../actions/restaurantAction";
 import { myOrders, clearErrors } from "../../actions/orderAction";
+import { Link } from "react-router-dom";
 
 const ListOrders = () => {
   const alert = useAlert();
@@ -94,9 +95,15 @@ const ListOrders = () => {
             ) : (
               <p style={{ color: "red" }}>{order.orderStatus}</p>
             ),
+            orderItems: orderItemNames,
+            orderDate: new Date(order.createdAt).toLocaleDateString(),
+            actions: (
+              <Link to={`/eats/orders/${order._id}`} > <FaRegEye/></Link>
+             )
         });
       });
     }
+    return data
   };
 
   return (
@@ -104,11 +111,11 @@ const ListOrders = () => {
       <div className="cartt">
         <h1 className="my-5">My Orders</h1>
 
-        {5 > 10 ? (
+        {loading ? (
           <Loader />
         ) : (
-          // <MDBDataTable data="" className="px-3" bordered striped hover />
-          <p>Your Order Details</p>
+          <MDBDataTable data={setOrders()} className="px-3" bordered striped hover />
+          //<p>Your Order Details</p>
         )}
       </div>
     </>
